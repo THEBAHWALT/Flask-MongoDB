@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import request 
 # 建立 Application 物件，設定靜態檔案路徑處理
 app = Flask(
     __name__,
@@ -6,11 +7,24 @@ app = Flask(
     # static_url_path = "/abc" # 127.0.0.1:82/abc/test.txt
     static_url_path="/" # 對應路徑 # 127.0.0.1:82/abc/test.txt
 )
-# 所有在 static 資料夾底下的檔案，都對應到網址路徑 / 名稱
+# 所有在 static 資料夾底下的檔案，都c對應到網址路徑 / 名稱
 
 # 建立路徑 / 對應的處理函式
 @app.route("/")
 def index(): # 用來回應路徑 / 處理函式
+    # print("請求方法", request.method)
+    # print("通訊協定", request.scheme)
+    # print("主機名稱", request.host)
+    # print("路徑", request.path)
+    # print("完整的網址",request.url)
+    # print("瀏覽器和作業系統", request.headers.get("user-agent"))
+    # print("語言偏好", request.headers.get("accept-language"))
+    # print("引薦網址", request.headers.get("referrer"))
+    lang = request.headers.get("accept-language")
+    if lang.startswith("en"):
+        return "Hello Flask"
+    else:
+        return "你好 Flask"
     return "Test" # 回傳網站首頁的內容
 
 # 建立路徑 /data 對應的處理函式
