@@ -9,6 +9,21 @@ app = Flask(
 )
 # 所有在 static 資料夾底下的檔案，都c對應到網址路徑 / 名稱
 
+# 建立路徑 /getSum 對應的處理函式
+# 利用要求字串 (Query String) 提供彈性: /getSum?min = 最小數字 & max = 最大數字
+@app.route("/getSum")
+def getSum(): # 1+2+3+....+max
+    # 接受要求字串中的要求資料
+    max = request.args.get("max", 100)
+    max = int(max)
+    min = request.args.get("min", 1)
+    min = int(min)
+    # 運算 (min + (min + 1) + (min + 2) + ... + max) 的總和運算
+    result = 0
+    for n in range(min, max + 1):
+        result = result + n
+    return "結果 : "+str(result) 
+
 # 建立路徑 / 對應的處理函式
 @app.route("/")
 def index(): # 用來回應路徑 / 處理函式
